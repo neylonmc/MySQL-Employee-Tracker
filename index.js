@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const Font = require('ascii-art-font');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -12,8 +13,9 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err; 
     console.log("connect as id " + connection.threadId);
-    connection.end();
+    runSearch();
 });
+
 
 function runSearch() {
     inquirer
@@ -60,6 +62,6 @@ function runSearch() {
     });
 };
 
-runSearch();
+
 
 //TO-DO RESEARCH MORE ON MYSQL JOINS. 
