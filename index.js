@@ -29,9 +29,37 @@ function runSearch() {
             "Remove Employee",
             "Updated Employee Role",
             "Updated Employee Manager"
-        ]
+        ],
+    }).then(function(answer) {
+        switch (answer.action) {
+            case "View All Employees":
+                viewemployees();
+                break;
+
+            case "View All Employees By Department":
+                viewDepartments();
+                break;
+    
+            case "View All Employees By Manager":
+                viewManagers();
+                break;
+
+            case "Add Employee":
+                addEmployee();
+                break;
+    
+            case "Remove Employee":
+                removeEmployee();
+                break;
+        
+            case "Updated Employee Manager":
+                updatedManager();
+                break;
+
+        }
     });
 };
 
 runSearch();
+
 //TO-DO RESEARCH MORE ON MYSQL JOINS. 
