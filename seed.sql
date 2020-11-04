@@ -21,6 +21,12 @@ VALUES ("Accountant", 100000)
 INSERT INTO roles (title, salary); 
 VALUES ("Legal Team Lead", 200000)
 
+INSERT INTO employee (first_name, last_name, role_id, manager_role); 
+VALUES ("Accountant", 100000)
 
 
+first_name VARCHAR (30),
+    last_name VARCHAR (30),
+    role_id INT,
+    manager_role INT NULL
 

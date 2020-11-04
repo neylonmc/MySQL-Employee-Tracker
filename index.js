@@ -14,3 +14,24 @@ connection.connect(function(err) {
     console.log("connect as id " + connection.threadId);
     connection.end();
 });
+
+function runSearch() {
+    inquirer
+    .prompt({
+        name: "action",
+        type: "list",
+        message: "What would you like to do?",
+        choices: [
+            "View All Employees",
+            "View All Employees By Department",
+            "View All Employees By Manager",
+            "Add Employee",
+            "Remove Employee",
+            "Updated Employee Role",
+            "Updated Employee Manager"
+        ]
+    });
+};
+
+runSearch();
+//TO-DO RESEARCH MORE ON MYSQL JOINS. 
