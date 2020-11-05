@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-const Font = require('ascii-art-font');
+const chalk = require("chalk"); 
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -35,7 +35,7 @@ function runSearch() {
     }).then(function(answer) {
         switch (answer.action) {
             case "View All Employees":
-                viewemployees();
+                viewEmployees();
                 break;
 
             case "View All Employees By Department":
@@ -62,6 +62,26 @@ function runSearch() {
     });
 };
 
-
-
-//TO-DO RESEARCH MORE ON MYSQL JOINS. 
+function viewEmployees() {
+     var query = "SELECT employee.first_name, employee.last_name, roles.title, roles.salary FROM employee JOIN roles ON employee.role_id = roles.id";
+     connection.query(query, [viewEmployees.start, viewEmployees.end], function(err, res) {
+         for (var i = 0; i < res.length; i++) {
+             console.log(
+                 "First Name: " +
+                 res[i].first_name +
+                 " Last Name: " +
+                 res[i].last_name +
+                 "Title: " +
+                 res[i].title +
+                 "Salary: " +
+                 res[i].salary
+             );
+         }
+         runSearch;
+     })
+    };
+//
+//TO-DO HAVE NO COMMITED VIEWEMPLOYEE FUNCTION _ ENDED THERE 
+//roles.title
+//"Role: " +
+//res[i].roles.title
