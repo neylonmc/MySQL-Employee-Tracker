@@ -77,7 +77,7 @@ function viewEmployees() {
                  res[i].salary
              );
          }
-         runSearch;
+         runSearch();
      })
     };
 //
