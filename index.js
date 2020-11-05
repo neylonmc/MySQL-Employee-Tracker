@@ -80,6 +80,29 @@ function viewEmployees() {
          runSearch();
      })
     };
+
+function viewDepartments() {
+    var query = "SELECT employee.first_name, employee.last_name, roles.title, roles.salary, departments.name FROM employee JOIN roles ON employee.role_id = roles.id JOIN departments ON departments.id = roles.department_id";
+    connection.query(query, [viewDepartments.start, viewDepartments.end], function(err, res) {
+        for (var i = 0; i < res.length; i++) {
+            console.log(
+                "First Name: " +
+                res[i].first_name +
+                " Last Name: " +
+                res[i].last_name +
+                " Title: " +
+                res[i].title +
+                " Salary: " +
+                res[i].salary +
+                " Departments: " +
+                res[i].name
+            );
+        }
+        runSearch();
+    })
+};
+
+
 //
 //TO-DO HAVE NO COMMITED VIEWEMPLOYEE FUNCTION _ ENDED THERE 
 //roles.title
