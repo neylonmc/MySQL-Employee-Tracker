@@ -46,6 +46,7 @@ function runSearch() {
             case "View All Employees By Their Titles":
                 viewRoles();
                 break;
+
             case "Add Employee":
                 addEmployee();
                 break;
@@ -93,6 +94,31 @@ function viewRoles() {
          runSearch();
      })
 };
+
+function addEmployee() {
+inquirer.prompt([
+    {
+        type: "input",
+        name: "first_name",
+        message: "What is the employee's first name?"
+    },
+    {
+        type: "input",
+        name: "last_name",
+        message: "What is the employee's last name?"
+    },
+    {
+        type: "list",
+        name: "role",
+        message: "What is the employee's role?",
+        choices: [
+            "Sales Lead", "Lawyer", "Salesperson", "Software Engingeer", "Accountant", "Junior Developer", "Legal Team Lead"
+        ],
+    },
+
+])
+
+}
 //
 //TO-DO STOPPED HERE
 
