@@ -109,19 +109,20 @@ inquirer.prompt([
     },
     {
         type: "list",
-        name: "role",
+        name: "role_id",
         message: "What is the employee's role?",
-        choices: [
-            "Sales Lead", "Lawyer", "Salesperson", "Software Engingeer", "Accountant", "Junior Developer", "Legal Team Lead"
-        ],
+        choices:
+            [1, 2, 3, 4, 5]
     },
 
-])
+]).then(function(res) {
+    const query = connection.query("INSERT INTO employee SET ?", res,
+    function(err, res) {
+        if (err) throw err; 
+        console.log("Employee has been added"); 
+    });
+    runSearch();
 
-}
-//
-//TO-DO STOPPED HERE
 
-//roles.title
-//"Role: " +
-//res[i].roles.title
+});
+} 
