@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 const chalk = require("chalk"); 
+const cTable = require("console.table"); 
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -26,7 +27,7 @@ function runSearch() {
         choices: [
             "View All Employees",
             "View All Employees By Department",
-            "View All Employees By Manager",
+            "View All Employees By Their Titles",
             "Add Employee",
             "Remove Employee",
             "Updated Employee Role",
@@ -42,10 +43,9 @@ function runSearch() {
                 viewDepartments();
                 break;
     
-            case "View All Employees By Manager":
-                viewManagers();
+            case "View All Employees By Their Titles":
+                viewRoles();
                 break;
-
             case "Add Employee":
                 addEmployee();
                 break;
@@ -63,48 +63,39 @@ function runSearch() {
 };
 
 function viewEmployees() {
-     var query = "SELECT employee.first_name, employee.last_name, roles.title, roles.salary FROM employee JOIN roles ON employee.role_id = roles.id";
-     connection.query(query, [viewEmployees.start, viewEmployees.end], function(err, res) {
-         for (var i = 0; i < res.length; i++) {
-             console.log(
-                 "First Name: " +
-                 res[i].first_name +
-                 " Last Name: " +
-                 res[i].last_name +
-                 "Title: " +
-                 res[i].title +
-                 "Salary: " +
-                 res[i].salary
-             );
-         }
+    
+     var query = "SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, departments.department FROM employee LEFT JOIN roles ON employee.role_id = roles.id LEFT JOIN departments ON departments.id = roles.department_id ORDER BY employee.id";
+     connection.query(query, function(err, res) {
+        console.log("\n");
+        console.table(chalk.yellow("All Employees"), res); 
+        console.log(chalk.white("------------------------------------"));
          runSearch();
      })
-    };
-
-function viewDepartments() {
-    var query = "SELECT employee.first_name, employee.last_name, roles.title, roles.salary, departments.name FROM employee JOIN roles ON employee.role_id = roles.id JOIN departments ON departments.id = roles.department_id";
-    connection.query(query, [viewDepartments.start, viewDepartments.end], function(err, res) {
-        for (var i = 0; i < res.length; i++) {
-            console.log(
-                "First Name: " +
-                res[i].first_name +
-                " Last Name: " +
-                res[i].last_name +
-                " Title: " +
-                res[i].title +
-                " Salary: " +
-                res[i].salary +
-                " Departments: " +
-                res[i].name
-            );
-        }
-        runSearch();
-    })
 };
 
+function viewDepartments() {
+    var query = "SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, departments.department FROM employee JOIN roles ON employee.role_id = roles.id JOIN departments ON departments.id = roles.department_id ORDER BY departments.department";
+     connection.query(query, function(err, res) {
+        console.log("\n");
+        console.table(chalk.yellow("All Employees By Department"), res);
+        console.log(chalk.white("------------------------------------"));
+         runSearch();
+     })
+};
 
+function viewRoles() {
+    var query = "SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, departments.department FROM employee JOIN roles ON employee.role_id = roles.id JOIN departments ON departments.id = roles.department_id ORDER BY roles.title";
+     connection.query(query, function(err, res) {
+        console.log("\n");
+        console.table(chalk.yellow("All Employees By Their Titles"), res);
+        console.log(chalk.white("------------------------------------"));
+
+         runSearch();
+     })
+};
 //
-//TO-DO HAVE NO COMMITED VIEWEMPLOYEE FUNCTION _ ENDED THERE 
+//TO-DO STOPPED HERE
+
 //roles.title
 //"Role: " +
 //res[i].roles.title

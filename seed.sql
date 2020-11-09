@@ -1,6 +1,4 @@
-USE employee_DB;
-
-INSERT INTO departments (name)
+INSERT INTO departments (department)
 VALUES ("Sales"), ("Legal"), ("Engineering"), ("Finance");
 
 INSERT INTO roles (title, salary, department_id)
@@ -12,13 +10,11 @@ VALUES ("Sales Lead", 70000, 1),
 ("Junior Developer", 80000, 3), 
 ("Legal Team Lead", 200000, 2);
 
-INSERT INTO employee (first_name, last_name, role_id) 
-VALUES ("David", "Rose", 1),
-("Stevie", "Budd", 2),
-("Twyla", "Sands", 3),
-("Ronnie", "SLee", 4),
-("Alexis", "Rose", 5),
-("Patrick", "Brewer", 6),
-("Ray", "Butani", 7);
-
-UPDATE `employee_db`.`employee` SET `manager_id` = '1' WHERE (`id` > '1');
+INSERT INTO employee (first_name, last_name, role_id, manager_id) 
+VALUES ("David", "Rose", 1, 1),
+("Stevie", "Budd", 2, 1),
+("Twyla", "Sands", 3, 2),
+("Ronnie", "SLee", 4, 3),
+("Alexis", "Rose", 5, 2),
+("Patrick", "Brewer", 6, 1),
+("Ray", "Butani", 7, 3);
