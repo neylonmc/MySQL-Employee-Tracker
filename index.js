@@ -29,7 +29,7 @@ function runSearch() {
             "View All Departments",
             "View All Employees By Their Titles",
             "Add Employee",
-            "Updated Employee Role",
+            "Update an Employee's Role",
             "Add A Department",
             "Add A Title"
         ],
@@ -59,7 +59,7 @@ function runSearch() {
                 addTitle();
                 break;
 
-            case "Updated Employee Role":
+            case "Update An Employee's Role":
                 updateRole();
                 break;
 
@@ -147,18 +147,46 @@ function addDepartment() {
     } 
 
 function addTitle() {
+    connection.query("SELECT roles.title AS title, roles.salary AS salary from roles")
     inquirer.prompt([
         {
             type: "input",
             name: "title",
             message: "What title would you like to add?"
         },
+        {
+            type: "input",
+            name: "salary",
+            message: "What is the titles salary?"
+        },
     ]).then(function(res) {
         const query = connection.query("INSERT INTO roles SET ?", res,
         function(err, res) {
             if (err) throw err; 
-            console.log("The title has been added"); 
         });
+        console.log("The title has been added along with the salary"); 
         runSearch();
     });
     } 
+
+// function updateRole() {
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             name: "title",
+//             message: "What is the employees new title?"
+//         },
+//         {
+//             type: "input",
+//             name: "salary",
+//             message: "What is the employees new salary?"
+//         },
+//     ]).then(function(res) {
+//         const query = connection.query("INSERT INTO roles SET ?", res,
+//         function(err, res) {
+//             if (err) throw err; 
+//             console.log("The title has been added"); 
+//         });
+//         runSearch();
+//     });
+//     } 
