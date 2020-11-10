@@ -29,9 +29,9 @@ function runSearch() {
             "View All Departments",
             "View All Employees By Their Titles",
             "Add Employee",
-            "Update an Employee's Role",
             "Add A Department",
-            "Add A Title"
+            "Add A Title",
+            "Update an Employee Role"
         ],
     }).then(function(answer) {
         switch (answer.action) {
@@ -59,7 +59,7 @@ function runSearch() {
                 addTitle();
                 break;
 
-            case "Update An Employee's Role":
+            case "Update an Employee Role":
                 updateRole();
                 break;
 
@@ -167,26 +167,27 @@ function addTitle() {
         console.log("The title has been added along with the salary"); 
         runSearch();
     });
-    } 
+    }
 
-// function updateRole() {
-//     inquirer.prompt([
-//         {
-//             type: "input",
-//             name: "title",
-//             message: "What is the employees new title?"
-//         },
-//         {
-//             type: "input",
-//             name: "salary",
-//             message: "What is the employees new salary?"
-//         },
-//     ]).then(function(res) {
-//         const query = connection.query("INSERT INTO roles SET ?", res,
-//         function(err, res) {
-//             if (err) throw err; 
-//             console.log("The title has been added"); 
-//         });
-//         runSearch();
-//     });
-//     } 
+function updateRole() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "Which employee would you like to update? (Please use first name only)"
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "What is the employee's role ID? (ID numbers can be found in the View All Employees table)",
+            choices:
+                [1, 2, 3, 4, 5, 6 , 7]
+        }
+    ])
+    .then(function (answer) {
+        connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.role_id, answer.first_name], function (err, data) {
+            console.log("The employee has been updated.");
+        });
+        runSearch(); 
+})
+}; 
