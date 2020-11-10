@@ -137,7 +137,9 @@ inquirer.prompt([
     const query = connection.query("INSERT INTO employee SET ?", res,
     function(err, res) {
         if (err) throw err; 
+        console.log("\n");
         console.log("Employee has been added"); 
+        console.log(chalk.white("------------------------------------"));
     });
     runSearch();
 });
@@ -156,7 +158,9 @@ function addDepartment() {
         const query = connection.query("INSERT INTO departments SET ?", res,
         function(err, res) {
             if (err) throw err; 
+            console.log("\n");
             console.log("Department has been added"); 
+            console.log(chalk.white("------------------------------------"));
         });
         runSearch();
     });
@@ -181,7 +185,9 @@ function addTitle() {
         function(err, res) {
             if (err) throw err; 
         });
+        console.log("\n");
         console.log("The title has been added along with the salary"); 
+        console.log(chalk.white("------------------------------------"));
         runSearch();
     });
     }
@@ -204,7 +210,9 @@ function updateRole() {
     ])
     .then(function (answer) {
         connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.role_id, answer.first_name], function (err, data) {
+            console.log("\n");
             console.log("The employee has been updated.");
+            console.log(chalk.white("------------------------------------"));
         });
         runSearch(); 
 })
