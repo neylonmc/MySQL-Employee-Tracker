@@ -55,7 +55,7 @@ function runSearch() {
                 addDepartment();
                 break;
                 
-            case "Add Title":
+            case "Add A Title":
                 addTitle();
                 break;
 
@@ -141,6 +141,23 @@ function addDepartment() {
         function(err, res) {
             if (err) throw err; 
             console.log("Department has been added"); 
+        });
+        runSearch();
+    });
+    } 
+
+function addTitle() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "What title would you like to add?"
+        },
+    ]).then(function(res) {
+        const query = connection.query("INSERT INTO roles SET ?", res,
+        function(err, res) {
+            if (err) throw err; 
+            console.log("The title has been added"); 
         });
         runSearch();
     });
