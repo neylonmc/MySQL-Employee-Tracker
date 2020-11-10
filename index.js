@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     password: "5407354680",
     database: "employee_DB"
 });
-
+//Cool header for the user when they open the application
 figlet('Ultimate Employee Tracker', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
@@ -21,12 +21,13 @@ figlet('Ultimate Employee Tracker', function(err, data) {
     console.log(data)
 });
 
+//Connection//
 connection.connect(function(err) {
     if (err) throw err; 
     runSearch();
 });
 
-
+//Allows the user to pick what they would like to do
 function runSearch() {
     inquirer
     .prompt({
@@ -76,6 +77,7 @@ function runSearch() {
     });
 };
 
+//Allows the user to view all the employees
 function viewEmployees() {
     
      var query = "SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, departments.department FROM employee LEFT JOIN roles ON employee.role_id = roles.id LEFT JOIN departments ON departments.id = roles.department_id ORDER BY employee.id";
@@ -87,6 +89,7 @@ function viewEmployees() {
      })
 };
 
+//Allows the user to view all the departments
 function viewDepartments() {
     var query = "SELECT department FROM departments";
      connection.query(query, function(err, res) {
@@ -97,6 +100,7 @@ function viewDepartments() {
      })
 };
 
+//Allows the user to view all the roles avaiable 
 function viewRoles() {
     var query = "SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, departments.department FROM employee JOIN roles ON employee.role_id = roles.id JOIN departments ON departments.id = roles.department_id ORDER BY roles.title";
      connection.query(query, function(err, res) {
@@ -108,6 +112,7 @@ function viewRoles() {
      })
 };
 
+//Allows the user to add employees to the mysql table 
 function addEmployee() {
 inquirer.prompt([
     {
@@ -138,6 +143,8 @@ inquirer.prompt([
 });
 } 
 
+//allows the user to add a department 
+
 function addDepartment() {
     inquirer.prompt([
         {
@@ -155,6 +162,7 @@ function addDepartment() {
     });
     } 
 
+//allows the user to add a new title for employees
 function addTitle() {
     connection.query("SELECT roles.title AS title, roles.salary AS salary from roles")
     inquirer.prompt([
@@ -178,6 +186,7 @@ function addTitle() {
     });
     }
 
+//allows the user to update an employees role which will then be present when the viewEmployees function is called
 function updateRole() {
     inquirer.prompt([
         {
