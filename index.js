@@ -26,12 +26,12 @@ function runSearch() {
         message: "What would you like to do?",
         choices: [
             "View All Employees",
-            "View All Employees By Department",
+            "View All Departments",
             "View All Employees By Their Titles",
             "Add Employee",
-            "Remove Employee",
             "Updated Employee Role",
-            "Updated Employee Manager"
+            "Add A Department",
+            "Add A Title"
         ],
     }).then(function(answer) {
         switch (answer.action) {
@@ -39,7 +39,7 @@ function runSearch() {
                 viewEmployees();
                 break;
 
-            case "View All Employees By Department":
+            case "View All Departments":
                 viewDepartments();
                 break;
     
@@ -50,13 +50,17 @@ function runSearch() {
             case "Add Employee":
                 addEmployee();
                 break;
-    
-            case "Remove Employee":
-                removeEmployee();
+
+            case "Add A Department":
+                addDepartment();
                 break;
-        
-            case "Updated Employee Manager":
-                updatedManager();
+                
+            case "Add Title":
+                addTitle();
+                break;
+
+            case "Updated Employee Role":
+                updateRole();
                 break;
 
         }
@@ -75,10 +79,10 @@ function viewEmployees() {
 };
 
 function viewDepartments() {
-    var query = "SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, departments.department FROM employee JOIN roles ON employee.role_id = roles.id JOIN departments ON departments.id = roles.department_id ORDER BY departments.department";
+    var query = "SELECT department FROM departments";
      connection.query(query, function(err, res) {
         console.log("\n");
-        console.table(chalk.yellow("All Employees By Department"), res);
+        console.table(chalk.yellow("All Departments"), res);
         console.log(chalk.white("------------------------------------"));
          runSearch();
      })
@@ -110,7 +114,7 @@ inquirer.prompt([
     {
         type: "list",
         name: "role_id",
-        message: "What is the employee's role?",
+        message: "What is the employee's title?",
         choices:
             [1, 2, 3, 4, 5]
     },
@@ -122,7 +126,22 @@ inquirer.prompt([
         console.log("Employee has been added"); 
     });
     runSearch();
-
-
 });
 } 
+
+function addDepartment() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "department",
+            message: "What department would you like to add?"
+        },
+    ]).then(function(res) {
+        const query = connection.query("INSERT INTO departments SET ?", res,
+        function(err, res) {
+            if (err) throw err; 
+            console.log("Department has been added"); 
+        });
+        runSearch();
+    });
+    } 
