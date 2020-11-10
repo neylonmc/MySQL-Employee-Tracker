@@ -2,6 +2,7 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 const chalk = require("chalk"); 
 const cTable = require("console.table"); 
+const figlet = require("figlet")
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -11,9 +12,17 @@ var connection = mysql.createConnection({
     database: "employee_DB"
 });
 
+figlet('Ultimate Employee Tracker', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+});
+
 connection.connect(function(err) {
     if (err) throw err; 
-    console.log("connect as id " + connection.threadId);
     runSearch();
 });
 
