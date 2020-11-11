@@ -22,6 +22,14 @@
   ```
   
 ## Usage
+To start the application, the user will need to run node index which will deploy "Ultimate Employee Tracker" header and a list of questions asking the user what the would like to do next. 
+
+<img src="assets/images/Start.gif" alt="gif of the deployed app">
+
+If the user chooses either view all employees, departments or employees by their titles - they will be presented with a table with all the information they were looking for. 
+
+<img src="assets/images/Two.gif" alt="gif of tables">
+
   
   
 ## License
