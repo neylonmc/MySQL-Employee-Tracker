@@ -14,7 +14,7 @@
   
 * [Tests](#tests)
   
-* [Questions?](#questions)
+* [Questions](#questions)
 
 ## Installation
   ```
@@ -33,6 +33,8 @@
 ## Tests
   N/A
   
-## Questions? Contact Me
+## Questions
+Have questions? Feel free to contact me: 
+
   GitHub: [neylonmc]("https://github.com/neylonmc")
   Email: [neylonmc@gmail.com]("mailto:neylonmc@gmail.com") 
