@@ -34,7 +34,7 @@ If the user chooses either view all employees, departments or employees by their
 
 If the user chooses add employee, department or title - they will be asked questions to gather information for whatever they would like to be added to the database. 
 
-<img src="assets/images/Five.gif" alt="add employee>
+<img src="assets/images/Five.gif" alt="add employee">
 
 Users can also updated an employee and assign them a new role. 
 
