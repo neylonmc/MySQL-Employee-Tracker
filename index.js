@@ -154,8 +154,8 @@ inquirer.prompt([
         console.log("\n");
         console.log("Employee has been added"); 
         console.log(chalk.white("------------------------------------"));
+        runSearch();
     });
-    runSearch();
 });
 });
 };
@@ -177,8 +177,8 @@ function addDepartment() {
             console.log("\n");
             console.log("Department has been added"); 
             console.log(chalk.white("------------------------------------"));
+            runSearch();
         });
-        runSearch();
     });
 };
 
@@ -271,4 +271,4 @@ function updateRole() {
 });
     });
 });
-};  
+}  
