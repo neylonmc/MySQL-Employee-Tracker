@@ -114,6 +114,14 @@ function viewRoles() {
 
 //Allows the user to add employees to the mysql table 
 function addEmployee() {
+    var roleChoice = [];
+    connection.query("SELECT * FROM roles", function(err, title) {
+      if (err) throw err;
+      for (var i = 0; i < title.length; i++) {
+        var titleList = title[i].title;
+        roleChoice.push(titleList);
+      };
+
 inquirer.prompt([
     {
         type: "input",
@@ -129,13 +137,19 @@ inquirer.prompt([
         type: "list",
         name: "role_id",
         message: "What is the employee's title?",
-        choices:
-            [1, 2, 3, 4, 5]
+        choices: roleChoice
     },
-
 ]).then(function(res) {
-    const query = connection.query("INSERT INTO employee SET ?", res,
-    function(err, res) {
+    var chosenRole;
+        for (var i = 0; i < title.length; i++) {
+          if (title[i].title === res.role_id) {
+            chosenRole = title[i];
+          }
+        };
+
+    connection.query("INSERT INTO employee SET role_id = ?",
+    [chosenRole.id],
+    function(err) {
         if (err) throw err; 
         console.log("\n");
         console.log("Employee has been added"); 
@@ -143,7 +157,9 @@ inquirer.prompt([
     });
     runSearch();
 });
-} 
+});
+};
+
 
 //allows the user to add a department 
 
@@ -164,7 +180,7 @@ function addDepartment() {
         });
         runSearch();
     });
-    } 
+};
 
 //allows the user to add a new title for employees
 function addTitle() {
@@ -190,10 +206,9 @@ function addTitle() {
         console.log(chalk.white("------------------------------------"));
         runSearch();
     });
-    }
+};
 
 //allows the user to update an employees role which will then be present when the viewEmployees function is called
-// 
 
 function updateRole() {
     var employeeChoice = [];
@@ -251,10 +266,9 @@ function updateRole() {
             console.log("Employee's role has been updated.")
             console.log(chalk.white("------------------------------------"));
             runSearch(); 
-          }
-        );
-      })
-     })
-    })
-  };
-  
+          });
+
+});
+    });
+});
+};  
