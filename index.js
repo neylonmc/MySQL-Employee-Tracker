@@ -193,27 +193,68 @@ function addTitle() {
     }
 
 //allows the user to update an employees role which will then be present when the viewEmployees function is called
+// 
+
 function updateRole() {
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "first_name",
-            message: "Which employee would you like to update? (Please use first name only)"
-        },
-        {
-            type: "list",
-            name: "role_id",
-            message: "What is the employee's role ID? (ID numbers can be found in the View All Employees table)",
-            choices:
-                [1, 2, 3, 4, 5, 6 , 7]
-        }
+    var employeeChoice = [];
+      connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee", function(err, res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+          var employeeList = res[i].name;
+          employeeChoice.push(employeeList);
+      };
+      
+      var roleChoice = [];
+    connection.query("SELECT * FROM roles", function(err, title) {
+      if (err) throw err;
+      for (var i = 0; i < title.length; i++) {
+        var titleList = title[i].title;
+        roleChoice.push(titleList);
+      };
+  
+      inquirer
+      .prompt([
+      {
+        name: "employee_id",
+        type: "rawlist",
+        message: "Which employee would you like to update?",
+        choices: employeeChoice
+      },
+      {
+        name: "role_id",
+        type: "rawlist",
+        message: "Select employee's new role:",
+        choices: roleChoice
+      }
     ])
-    .then(function (answer) {
-        connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.role_id, answer.first_name], function (err, data) {
+    .then(function(answer) {
+  
+      var chosenEmp;
+          for (var i = 0; i < res.length; i++) {
+            if (res[i].name === answer.employee_id) {
+              chosenEmp = res[i];
+          }
+        };
+  
+      var chosenRole;
+        for (var i = 0; i < title.length; i++) {
+          if (title[i].title === answer.role_id) {
+            chosenRole = title[i];
+          }
+        };
+        connection.query(
+          "UPDATE employee SET role_id = ? WHERE id = ?",
+          [chosenRole.id, chosenEmp.id],
+          function(err) {
+            if (err) throw err;
             console.log("\n");
-            console.log("The employee has been updated.");
+            console.log("Employee's role has been updated.")
             console.log(chalk.white("------------------------------------"));
-        });
-        runSearch(); 
-})
-}; 
+            runSearch(); 
+          }
+        );
+      })
+     })
+    })
+  };
+  
